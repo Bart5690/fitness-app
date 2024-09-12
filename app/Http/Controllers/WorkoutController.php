@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Musclegroup;
 use App\Models\Workout;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,12 @@ class WorkoutController extends Controller
 
     public function index()
     {
-        $workouts = Workout::all();
-        return view('workouts.index', compact('workouts'));
+        $musclegroups = Musclegroup::all(); // Verkrijg alle spiergroepen
+        $workouts = Workout::all(); // Verkrijg alle workouts
+
+        return view('workouts.index', compact('workouts', 'musclegroups'));
     }
+
 
     public function create()
     {

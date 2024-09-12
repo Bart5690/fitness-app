@@ -21,6 +21,8 @@
             <ul class="flex space-x-4">
                 <li><a href="{{ route('workouts.index') }}" class="hover:text-gray-300">Home</a></li>
                 <li><a href="{{ route('workouts.create') }}" class="hover:text-gray-300">Add Workout</a></li>
+                <li><a href="{{ route('musclegroups.index') }}" class="hover:text-gray-300">Musclegroups</a></li>
+                <li><a href="{{ route('musclegroups.create') }}" class="hover:text-gray-300">Add Musclegroup</a></li>
                 <!-- Add more links here if needed -->
             </ul>
         </nav>

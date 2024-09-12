@@ -11,6 +11,7 @@ class Workout extends Model
 {
     use HasFactory;
 
+    // De kolommen in de database die ingevuld kunnen worden via mass assignment
     protected $fillable = [
         'exercise',  // Naam van de oefening
         'sets',      // Aantal sets
@@ -22,4 +23,9 @@ class Workout extends Model
     {
         return $this->belongsTo(User::class);  // Stel dat een workout bij een gebruiker hoort
     }
+    public function musclegroups()
+    {
+        return $this->belongsToMany(Musclegroup::class);
+    }
+
 }
