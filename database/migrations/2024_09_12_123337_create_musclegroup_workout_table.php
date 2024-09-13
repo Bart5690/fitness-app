@@ -9,20 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('musclegroup_workout', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('musclegroup_id')->constrained()->onDelete('cascade');
-            $table->foreignId('workout_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('workout_id');
+            $table->unsignedBigInteger('musclegroup_id');
             $table->timestamps();
+
+            // Stel de foreign keys in
+            $table->foreign('workout_id')->references('id')->on('workouts')->onDelete('cascade');
+            $table->foreign('musclegroup_id')->references('id')->on('musclegroups')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('musclegroup_workout');
     }

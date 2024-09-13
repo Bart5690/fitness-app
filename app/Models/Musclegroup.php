@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Requests\CreateOrUpdateMusclegroupRequest;
+use App\Http\Requests\CreateOrUpdateWorkoutRequest;
 
 class Musclegroup extends Model
 {
@@ -16,6 +18,6 @@ class Musclegroup extends Model
 
     public function workouts()
     {
-        return $this->hasMany(Workout::class);
+        return $this->belongsToMany(Workout::class, 'musclegroup_workout');
     }
 }

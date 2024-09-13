@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Http\Requests\CreateOrUpdateMusclegroupRequest;
+use App\Http\Requests\CreateOrUpdateWorkoutRequest;
+
 
 
 class Workout extends Model
@@ -23,8 +26,8 @@ class Workout extends Model
     {
         return $this->belongsTo(User::class);  // Stel dat een workout bij een gebruiker hoort
     }
-    public function musclegroup()
+    public function musclegroups()
     {
-        return $this->belongsTo(Musclegroup::class);
+        return $this->belongsToMany(Musclegroup::class, 'musclegroup_workout');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Musclegroup;
 use Illuminate\Http\Request;
+use App\Models\Workout;
 
 class MusclegroupController extends Controller
 {

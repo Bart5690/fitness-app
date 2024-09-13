@@ -8,8 +8,7 @@
     <div class="container mx-auto px-4">
         <h1 class="text-3xl font-bold mb-6">Edit Workout</h1>
 
-        <form action="{{ route('workouts.update', $workout->id) }}" method="POST"
-              class="bg-white p-6 rounded-lg shadow-md">
+        <form action="{{ route('workouts.update', $workout->id) }}" method="POST" class="bg-white p-6 rounded-lg shadow-md">
             @csrf
             @method('PUT')
 

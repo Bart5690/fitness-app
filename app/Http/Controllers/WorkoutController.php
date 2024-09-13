@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateOrUpdateWorkoutRequest;
 use App\Models\Musclegroup;
 use App\Models\Workout;
+use Illuminate\Http\Request;
+
 
 class WorkoutController extends Controller
 {
@@ -49,20 +51,50 @@ class WorkoutController extends Controller
             ->with('success', 'Workout deleted successfully.');
     }
 
-    public function store(CreateOrUpdateWorkoutRequest $request)
+    public function store(Request $request)
     {
-        $workout = Workout::create($request->validated());
-        $workout->musclegroup()->associate($request->musclegroup_id);
+        // Valideer de data
+        $request->validate([
+
+            'exercise' => 'required|string|max:255',
+            'sets' => 'required|integer|min:1',
+            'reps' => 'required|integer|min:1',
+            'weight' => 'nullable|numeric|min:0',
+            'musclegroup_id' => 'required|exists:musclegroups,id',
+        ]);
+
+        // Validatie vindt plaats via CreateOrUpdateWorkoutRequest
+
+        // Maak een nieuwe workout aan
+        $workout = new Workout();
+        $workout->exercise = $request->input('exercise');
+        $workout->sets = $request->input('sets');
+        $workout->reps = $request->input('reps');
+        $workout->weight = $request->input('weight'); // Optioneel
+
+        // Koppel de spiergroepen (als veel-op-veel relatie)
         $workout->save();
 
-        return redirect()->route('workouts.index');
+        // Doorverwijzen naar de gewenste pagina
+        return redirect()->route('workouts.index')->with('success', 'Workout opgeslagen!');
     }
 
-    public function update(CreateOrUpdateWorkoutRequest $request, Workout $workout)
+
+    public function update(Request $request, Workout $workout)
     {
-        $workout->update($request->validated());
-        $workout->musclegroup()->associate($request->musclegroup_id);
-        $workout->save();
+        $validatedData = $request->validate([
+            'exercise' => 'required|string',
+            'sets' => 'required|integer',
+            'reps' => 'required|integer',
+            'weight' => 'nullable|numeric',
+            'musclegroups' => 'required|array',
+            'musclegroups.*' => 'exists:musclegroups,id',
+        ]);
+
+        $workout->update($validatedData);
+
+        // Update de gekoppelde spiergroepen
+        $workout->musclegroups()->sync($request->musclegroups);
 
         return redirect()->route('workouts.index');
     }
