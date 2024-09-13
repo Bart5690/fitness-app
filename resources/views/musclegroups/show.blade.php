@@ -6,6 +6,14 @@
 
         <div class="bg-white p-6 rounded-lg shadow-md">
             <p><strong>Name:</strong> {{ $musclegroup->name }}</p>
+            <p><strong> workouts</strong>
+            <ul>
+                @foreach($musclegroup->workouts as $workout)
+                    <li>{{ $workout->exercise }}</li>
+                @endforeach
+            </ul>
+
+            </p>
             <p><strong>Image:</strong></p>
             @if ($musclegroup->image)
                 <img src="{{ asset('storage/' . $musclegroup->image) }}" alt="{{ $musclegroup->name }}" class="w-full max-w-lg h-auto object-cover mt-2">

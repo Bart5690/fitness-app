@@ -66,6 +66,4 @@ class WorkoutController extends Controller
 
         return redirect()->route('workouts.index');
     }
-
-
 }
