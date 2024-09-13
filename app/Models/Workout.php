@@ -23,9 +23,8 @@ class Workout extends Model
     {
         return $this->belongsTo(User::class);  // Stel dat een workout bij een gebruiker hoort
     }
-    public function musclegroups()
+    public function musclegroup()
     {
-        return $this->belongsToMany(Musclegroup::class);
+        return $this->belongsTo(Musclegroup::class);
     }
-
 }

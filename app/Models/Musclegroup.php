@@ -16,11 +16,6 @@ class Musclegroup extends Model
 
     public function workouts()
     {
-        return $this->belongsToMany(Workout::class);
+        return $this->hasMany(Workout::class);
     }
-
-//    public function musclegroups()
-//    {
-//        return $this->belongsToMany(Musclegroup::class);
-//    }
 }

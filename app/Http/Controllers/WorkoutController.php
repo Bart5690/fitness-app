@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateOrUpdateWorkoutRequest;
 use App\Models\Musclegroup;
 use App\Models\Workout;
-use Illuminate\Http\Request;
 
 class WorkoutController extends Controller
 {
@@ -18,25 +18,19 @@ class WorkoutController extends Controller
     }
 
 
+    // In WorkoutController
+
     public function create()
     {
-        return view('workouts.create');
+        $musclegroups = Musclegroup::all(); // Haal alle spiergroepen op
+        return view('workouts.create', compact('musclegroups'));
     }
 
-
-    public function store(Request $request)
+    public function edit($id)
     {
-        $request->validate([
-            'exercise' => 'required|string',
-            'sets' => 'required|integer',
-            'reps' => 'required|integer',
-            'weight' => 'required|numeric',
-        ]);
-
-        Workout::create($request->all());
-
-        return redirect()->route('workouts.index')
-            ->with('success', 'Workout created successfully.');
+        $workout = Workout::findOrFail($id);
+        $musclegroups = Musclegroup::all(); // Haal alle spiergroepen op
+        return view('workouts.edit', compact('workout', 'musclegroups'));
     }
 
 
@@ -46,27 +40,6 @@ class WorkoutController extends Controller
     }
 
 
-    public function edit(Workout $workout)
-    {
-        return view('workouts.edit', compact('workout'));
-    }
-
-
-    public function update(Request $request, Workout $workout)
-    {
-        $request->validate([
-            'exercise' => 'required|string',
-            'sets' => 'required|integer',
-            'reps' => 'required|integer',
-            'weight' => 'required|numeric',
-        ]);
-
-        $workout->update($request->all());
-
-        return redirect()->route('workouts.index')
-            ->with('success', 'Workout updated successfully.');
-    }
-
 
     public function destroy(Workout $workout)
     {
@@ -75,4 +48,24 @@ class WorkoutController extends Controller
         return redirect()->route('workouts.index')
             ->with('success', 'Workout deleted successfully.');
     }
+
+    public function store(CreateOrUpdateWorkoutRequest $request)
+    {
+        $workout = Workout::create($request->validated());
+        $workout->musclegroup()->associate($request->musclegroup_id);
+        $workout->save();
+
+        return redirect()->route('workouts.index');
+    }
+
+    public function update(CreateOrUpdateWorkoutRequest $request, Workout $workout)
+    {
+        $workout->update($request->validated());
+        $workout->musclegroup()->associate($request->musclegroup_id);
+        $workout->save();
+
+        return redirect()->route('workouts.index');
+    }
+
+
 }
