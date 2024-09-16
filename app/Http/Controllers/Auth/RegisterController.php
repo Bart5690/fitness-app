@@ -1,56 +1,41 @@
 <?php
 
-// app/Http/Controllers/Auth/RegisterController.php
-
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
     public function showRegistrationForm()
     {
-        return view('auth.register'); // De view voor registratie
+        return view('auth.register');
     }
-
-    public function logout(Request $request)
-    {
-        auth()->logout(); // Uitloggen van de gebruiker
-        return redirect('/workouts')->with('success', 'You have been logged out.'); // Redirect naar de homepagina
-    }
-    public function __construct()
-    {
-        $this->middleware('guest');
-
-    }
-
-
 
     public function register(Request $request)
     {
-        // Validatie van de input
+        // Validate the incoming request data
         $this->validate($request, [
-            'full_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Gebruiker aanmaken
+        // Create the user
         $user = User::create([
-            'full_name' => $request->full_name,
+            'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        // Inloggen van de gebruiker
-        auth()->login($user);
+        // Log the user in
+        Auth::login($user);
 
-        // Redirect naar de homepagina
-        return redirect('/workouts')->with('success', 'Welcome ' . $user->full_name);
+        // Redirect to the home page after registration
+        return redirect()->route('workouts.index')->with('success', 'Registration successful');
     }
 }
-

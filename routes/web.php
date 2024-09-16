@@ -18,7 +18,6 @@ Route::post('/workouts', [WorkoutController::class, 'store'])->name('workouts.st
 
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
-Route::get('logout', [RegisterController::class, 'logout'])->name('logout');
 
 
 
