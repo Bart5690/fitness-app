@@ -42,7 +42,6 @@ class WorkoutController extends Controller
     }
 
 
-
     public function destroy(Workout $workout)
     {
         $workout->delete();
@@ -51,32 +50,23 @@ class WorkoutController extends Controller
             ->with('success', 'Workout deleted successfully.');
     }
 
-    public function store(Request $request)
+    public function store(CreateOrUpdateWorkoutRequest $request)
     {
-        // Valideer de data
-        $request->validate([
-
-            'exercise' => 'required|string|max:255',
-            'sets' => 'required|integer|min:1',
-            'reps' => 'required|integer|min:1',
-            'weight' => 'nullable|numeric|min:0',
-            'musclegroup_id' => 'required|exists:musclegroups,id',
-        ]);
-
-        // Validatie vindt plaats via CreateOrUpdateWorkoutRequest
-
-        // Maak een nieuwe workout aan
         $workout = new Workout();
         $workout->exercise = $request->input('exercise');
         $workout->sets = $request->input('sets');
         $workout->reps = $request->input('reps');
-        $workout->weight = $request->input('weight'); // Optioneel
+        $workout->weight = $request->input('weight');
 
-        // Koppel de spiergroepen (als veel-op-veel relatie)
+        // Save workout
         $workout->save();
 
-        // Doorverwijzen naar de gewenste pagina
-        return redirect()->route('workouts.index')->with('success', 'Workout opgeslagen!');
+        // Koppel de geselecteerde spiergroepen via de pivot table
+        if ($request->has('musclegroups')) {
+            $workout->musclegroups()->sync($request->input('musclegroups'));
+        }
+
+        return redirect()->route('workouts.index')->with('success', 'Workout succesvol opgeslagen!');
     }
 
 

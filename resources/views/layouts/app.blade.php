@@ -19,6 +19,19 @@
         </a>
         <nav>
             <ul class="flex space-x-4">
+                @guest
+
+
+                    <li><a href="{{ route('register') }}">Register</a></li>
+                @else
+                    <li>Welcome, {{ Auth::user()->full_name }}</li>
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit">Logout</button>
+                        </form>
+
+                @endguest
                 <li><a href="{{ route('workouts.index') }}" class="hover:text-gray-300">Workouts</a></li>
                 <li><a href="{{ route('workouts.create') }}" class="hover:text-gray-300">Add Workout</a></li>
                 <li><a href="{{ route('musclegroups.index') }}" class="hover:text-gray-300">Musclegroups</a></li>

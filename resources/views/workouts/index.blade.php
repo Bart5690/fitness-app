@@ -3,6 +3,12 @@
 @extends('layouts.app')
 
 @section('content')
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="container mx-auto px-4">
         <h1 class="text-3xl font-bold text-center my-8">Workouts</h1>
 
