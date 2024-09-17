@@ -22,7 +22,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Authentication passed
-            return redirect()->route('workouts.index');
+            return redirect()->route('workouts');
         }
 
         return redirect()->back()->withErrors(['login' => 'Login failed.']);

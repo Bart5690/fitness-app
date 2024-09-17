@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Workout Tracker')</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/flowbite@1.5.1/dist/flowbite.js"></script>
+
     @stack('styles') <!-- For additional styles if needed -->
 </head>
 <body class="font-sans antialiased bg-gray-100">
@@ -16,10 +18,9 @@
 <nav class="bg-white border-gray-200 dark:bg-gray-900">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="{{ route('workouts.index') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Logo" />
+            <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
             <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Workout Tracker</span>
         </a>
-
         <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             @guest
                 <!-- Links voor gasten -->
@@ -29,7 +30,6 @@
                 <!-- Ingelogde gebruikers -->
                 <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                     <span class="sr-only">Open user menu</span>
-                    <!-- Profielfoto -->
                     <img class="w-8 h-8 rounded-full" src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : 'https://via.placeholder.com/150' }}" alt="User photo">
                 </button>
 
@@ -41,10 +41,10 @@
                     </div>
                     <ul class="py-2">
                         <li>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                            <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
                         </li>
                         <li>
-                            <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                            <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-red-200 dark:hover:text-white"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 Sign out
                             </a>
@@ -87,6 +87,7 @@
 
 
 
+
 <!-- Main Content -->
 <main class="py-6">
     <div class="container mx-auto px-4">
@@ -103,6 +104,7 @@
 
 <!-- Optional JavaScript -->
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="https://unpkg.com/flowbite@1.5.1/dist/flowbite.js"></script>
 @stack('scripts') <!-- For additional scripts if needed -->
 </body>
 </html>

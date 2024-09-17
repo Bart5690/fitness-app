@@ -6,17 +6,28 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
+    /**
+     * Toon het registratieformulier.
+     *
+     * @return \Illuminate\View\View
+     */
     public function showRegistrationForm()
     {
         return view('auth.register');
     }
 
+    /**
+     * Handel de registratie af.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function register(Request $request)
     {
         // Validatie van de invoer inclusief de profielfoto
@@ -33,7 +44,7 @@ class RegisterController extends Controller
             $profilePicturePath = $request->file('profile_picture')->store('profile_pictures', 'public'); // Opslaan in de 'public' disk
         }
 
-        // Opslaan van de gebruiker met gehasht wachtwoord en profielfoto (indien aanwezig)
+        // Maak de nieuwe gebruiker aan
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -41,8 +52,13 @@ class RegisterController extends Controller
             'profile_picture' => $profilePicturePath, // Sla het pad van de profielfoto op
         ]);
 
+        // Trigger het Registered event voor e-mailverificatie
+        event(new Registered($user));
+
+        // Log de gebruiker automatisch in
         Auth::login($user);
 
-        return redirect()->intended('/'); // Of de homepage of een andere route
+        // Redirect naar een route die verificatie vereist of naar de homepage
+        return redirect()->intended('/workouts.index'); // Of naar de homepage of een andere route
     }
 }
