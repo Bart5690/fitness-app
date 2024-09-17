@@ -4,7 +4,7 @@
     <div class="container mx-auto p-6">
         <h1 class="text-2xl font-bold mb-6">Register</h1>
 
-        <form action="{{ route('register') }}" method="POST">
+        <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
             @csrf
             <!-- Full Name -->
             <div class="mb-4">
@@ -28,6 +28,14 @@
             <div class="mb-4">
                 <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password</label>
                 <input type="password" name="password_confirmation" id="password_confirmation" class="mt-1 block w-full border-gray-300 rounded-md" required>
+            </div>
+
+            <div>
+                <label for="profile_picture">Profile Picture</label>
+                <input type="file" name="profile_picture" id="profile_picture" accept="image/*">
+                @error('profile_picture')
+                <span class="text-red-500">{{ $message }}</span>
+                @enderror
             </div>
 
             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">

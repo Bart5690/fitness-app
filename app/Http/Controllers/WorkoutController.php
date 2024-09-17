@@ -13,8 +13,8 @@ class WorkoutController extends Controller
 
     public function index()
     {
-        $musclegroups = Musclegroup::all(); // Verkrijg alle spiergroepen
-        $workouts = Workout::all(); // Verkrijg alle workouts
+        $musclegroups = Musclegroup::all(); // Fetch all muscle groups
+        $workouts = Workout::all(); // Fetch all workouts
 
         return view('workouts.index', compact('workouts', 'musclegroups'));
     }
@@ -24,7 +24,8 @@ class WorkoutController extends Controller
 
     public function create()
     {
-        $musclegroups = Musclegroup::all(); // Haal alle spiergroepen op
+        $musclegroups = Musclegroup::all(); // Fetch all muscle groups
+
         return view('workouts.create', compact('musclegroups'));
     }
 
