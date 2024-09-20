@@ -50,6 +50,12 @@ class User extends Authenticatable
         }
     }
 
+    public function workouts()
+    {
+        return $this->hasMany(Workout::class);
+    }
+
+
     /**
      * Verstuur de e-mailverificatie melding.
      */

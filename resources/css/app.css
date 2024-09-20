@@ -1,0 +1,149 @@
+/* Basisstijl voor de body van de inhoud */
+.wysiwyg-content {
+    font-family: Arial, sans-serif; /* Standaard lettertype voor de inhoud */
+    line-height: 1.6; /* Regelafstand voor leesbaarheid */
+    color: #333; /* Kleur van de tekst */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Stijl voor headers */
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 2.5rem; /* Grootte van <h1> */
+    color: #2d3748; /* Kleur van <h1> */
+}
+
+h2 {
+    font-size: 2rem; /* Grootte van <h2> */
+    color: #2d3748; /* Kleur van <h2> */
+}
+
+h3 {
+    font-size: 1.75rem; /* Grootte van <h3> */
+    color: #2d3748; /* Kleur van <h3> */
+}
+
+h4 {
+    font-size: 1.5rem; /* Grootte van <h4> */
+    color: #2d3748; /* Kleur van <h4> */
+}
+
+h5 {
+    font-size: 1.25rem; /* Grootte van <h5> */
+    color: #2d3748; /* Kleur van <h5> */
+}
+
+h6 {
+    font-size: 1rem; /* Grootte van <h6> */
+    color: #2d3748; /* Kleur van <h6> */
+}
+
+/* Stijl voor paragrafen */
+p {
+    margin: 0 0 1em;
+    font-size: 1rem; /* Grootte van tekst in paragrafen */
+}
+
+/* Stijl voor links */
+a {
+    color: #3182ce; /* Kleur van links */
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #2b6cb0; /* Kleur van links bij hover */
+    text-decoration: none;
+}
+
+/* Stijl voor lijsten */
+ul, ol {
+    margin: 0 0 1em;
+    padding: 0 1em; /* Padding om lijsten in te laten springen */
+}
+
+ul {
+    list-style-type: disc; /* Type opsommingstekens */
+}
+
+ol {
+    list-style-type: decimal; /* Type nummers */
+}
+
+/* Stijl voor lijstitems */
+li {
+    margin: 0 0 0.5em;
+}
+
+/* Stijl voor afbeeldingen */
+img {
+    max-width: 100%; /* Zorg ervoor dat afbeeldingen niet groter worden dan hun container */
+    height: auto; /* Behoud de verhoudingen van de afbeelding */
+    display: block; /* Verwijder ongewenste ruimte onder de afbeelding */
+    margin: 0 auto; /* Centreer de afbeelding */
+}
+
+/* Stijl voor tabellen */
+table {
+    width: 100%;
+    border-collapse: collapse; /* Verwijder spaties tussen cellen */
+    margin-bottom: 1em;
+}
+
+th, td {
+    border: 1px solid #ddd; /* Randkleur van cellen */
+    padding: 8px; /* Padding binnen cellen */
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4; /* Achtergrondkleur van kopcellen */
+    font-weight: bold;
+}
+
+/* Stijl voor blockquotes */
+blockquote {
+    border-left: 4px solid #ddd; /* Rand aan de linkerzijde */
+    padding-left: 1em;
+    margin: 0 0 1em;
+    font-style: italic;
+    color: #666;
+}
+
+/* Stijl voor codeblokken */
+code {
+    background-color: #f4f4f4;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+pre {
+    background-color: #f4f4f4;
+    padding: 1em;
+    border-radius: 4px;
+    overflow-x: auto; /* Zorgt ervoor dat lange regels kunnen scrollen */
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre-wrap; /* Houdt witruimtes zoals in de editor */
+    border: 1px solid #ddd; /* Randkleur */
+}
+
+/* Stijl voor knoppen */
+button {
+    background-color: #3182ce; /* Achtergrondkleur van knoppen */
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2b6cb0; /* Achtergrondkleur van knoppen bij hover */
+}
+

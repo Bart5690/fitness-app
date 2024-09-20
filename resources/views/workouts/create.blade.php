@@ -1,3 +1,5 @@
+<!-- resources/views/workouts/create.blade.php -->
+
 @extends('layouts.app')
 
 @section('content')
@@ -16,6 +18,9 @@
             @csrf
 
             @include('workouts.form')
+
+            <!-- Add TinyMCE editor for description -->
+            <x-forms.tinymce-editor />
 
             <div class="flex justify-end">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600">

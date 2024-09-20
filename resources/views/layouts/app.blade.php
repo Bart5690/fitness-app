@@ -6,15 +6,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Workout Tracker')</title>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://unpkg.com/flowbite@1.5.1/dist/flowbite.js"></script>
     <script src="https://cdn.tiny.cloud/1/jqz5npvbipvssakskn8olc74ijfdnynzcw1co4k9uogxin9f/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
     <script>
         tinymce.init({
-            selector: 'textarea.wysiwyg-editor', // Selecteer de textarea met de class
-            plugins: 'link lists image table code',
-            toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link image | code'
+            selector: 'textarea.wysiwyg-editor',
+            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table | fontselect fontsizeselect | forecolor backcolor',
+            fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
+            font_formats: 'Andale Mono=andale mono, monospace; Arial=arial, helvetica, sans-serif; Courier New=courier new, courier, monospace; Georgia=georgia, serif; Times New Roman=times new roman, times, serif; Verdana=verdana, geneva, sans-serif',
+            content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
         });
     </script>
 

@@ -27,9 +27,10 @@
                 <p class="text-gray-900">{{ $workout->weight }}</p>
             </div>
 
-            <div class="mb-4">
+            <div class="wysiwyg-content mt-4">
                 <span class="font-semibold text-gray-700">Description:</span>
-                <p class="text-gray-900">{!! $workout->description !!}</p>
+                {!! $workout->description !!}
+            </div>
 
             <div class="flex justify-end mt-4">
                 <a href="{{ route('workouts.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-gray-600">

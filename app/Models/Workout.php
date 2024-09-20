@@ -21,6 +21,7 @@ class Workout extends Model
         'reps',      // Aantal herhalingen
         'weight',    // Gewicht
         'description', // Beschrijving
+        'user_id',   // De gebruiker die de workout heeft aangemaakt
     ];
 
     public function user()
