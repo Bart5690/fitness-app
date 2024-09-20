@@ -20,6 +20,7 @@ class Workout extends Model
         'sets',      // Aantal sets
         'reps',      // Aantal herhalingen
         'weight',    // Gewicht
+        'description', // Beschrijving
     ];
 
     public function user()

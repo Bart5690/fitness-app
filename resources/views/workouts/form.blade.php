@@ -21,6 +21,12 @@
     @enderror
 </div>
 
+<div class="mb-4">
+    <label for="description" class="block text-sm font-medium text-gray-700">Beschrijving</label>
+    <textarea id="description" name="description" class="form-input wysiwyg-editor">{{ old('description', $workout->description ?? '') }}</textarea>
+</div>
+
+
 
 <div class="mb-4">
     <label for="musclegroups" class="block text-sm font-medium text-gray-700">Spiergroepen</label>

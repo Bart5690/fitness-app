@@ -58,6 +58,7 @@ class WorkoutController extends Controller
         $workout->sets = $request->input('sets');
         $workout->reps = $request->input('reps');
         $workout->weight = $request->input('weight');
+        $workout->description = $request->input('description');
 
         // Save workout
         $workout->save();
@@ -80,6 +81,7 @@ class WorkoutController extends Controller
             'weight' => 'nullable|numeric',
             'musclegroups' => 'required|array',
             'musclegroups.*' => 'exists:musclegroups,id',
+            'description' => 'nullable|string',
         ]);
 
         $workout->update($validatedData);

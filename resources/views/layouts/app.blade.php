@@ -8,6 +8,16 @@
     <title>@yield('title', 'Workout Tracker')</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://unpkg.com/flowbite@1.5.1/dist/flowbite.js"></script>
+    <script src="https://cdn.tiny.cloud/1/jqz5npvbipvssakskn8olc74ijfdnynzcw1co4k9uogxin9f/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+            selector: 'textarea.wysiwyg-editor', // Selecteer de textarea met de class
+            plugins: 'link lists image table code',
+            toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link image | code'
+        });
+    </script>
+
 
     @stack('styles') <!-- For additional styles if needed -->
 </head>

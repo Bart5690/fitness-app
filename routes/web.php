@@ -37,21 +37,4 @@ Route::get('/', function () {
     return redirect()->route('workouts.index'); // Stuur de gebruiker naar de workouts index pagina
 });
 
-Route::get('/', function () {
-    return view('workouts.index');
-})->middleware('auth');
-
-Auth::routes(['verify' => true]);
-
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
-
-// Route voor e-mail verificatie
-Route::get('/email/verify/{id}/{hash}', function () {
-    // Dit is gewoon een placeholder; Laravel heeft ingebouwde logica
-})->middleware(['auth', 'signed'])->name('verification.verify');
-
-// Verificatieherinneringen en profiel bijwerken (optioneel)
-Route::post('/email/resend', [RegisterController::class, 'resendVerificationEmail'])->middleware('auth')->name('verification.resend');
 

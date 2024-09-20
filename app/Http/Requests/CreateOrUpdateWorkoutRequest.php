@@ -21,8 +21,10 @@ class CreateOrUpdateWorkoutRequest extends FormRequest
             'sets' => 'required|integer',
             'reps' => 'required|integer',
             'weight' => 'nullable|numeric',
+            'description' => 'nullable|string',
             'musclegroups' => 'required|array', // Zorg ervoor dat er spiergroepen zijn geselecteerd
             'musclegroups.*' => 'exists:musclegroups,id', // Zorg ervoor dat elke geselecteerde spiergroep bestaat
+
         ];
     }
 
