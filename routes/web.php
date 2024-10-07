@@ -5,7 +5,6 @@ use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\MusclegroupController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
 
 /**
@@ -27,7 +26,7 @@ Route::middleware(['auth'])->group(function () {
     // Resource route voor Workouts (bevat create, store, edit, update, destroy)
     Route::resource('workouts', WorkoutController::class);
 
-    // Specifieke route voor workouts van een gebruike
+    // Specifieke route voor workouts van een gebruiken
     Route::get('/user/{user}/workouts', [WorkoutController::class, 'userWorkouts'])->name('user.workouts');
 });
 
@@ -67,9 +66,16 @@ Route::get('/email/verify', function () {
 })->middleware('auth')->name('verification.notice');
 
 // E-mail verificatie route
-Route::get('/email/verify/{id}/{hash}', function () {
+Route::get('/email/verify/{slug}/{hash}', function () {
     // Placeholder, Laravel heeft standaard verificatielogica
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 // Route voor opnieuw versturen van verificatie e-mail
 Route::post('/email/resend', [RegisterController::class, 'resendVerificationEmail'])->middleware('auth')->name('verification.resend');
+
+Route::post('/workouts/{slug}/email', [WorkoutController::class, 'sendEmail'])->name('workouts.email');
+
+// Zorg ervoor dat de andere routes eronder staan:
+Route::resource('workouts', WorkoutController::class)->parameters([
+    'workouts' => 'slug'
+]);

@@ -8,8 +8,12 @@ use App\Models\Workout;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use App\Mail\WorkoutDetailsMail;
+use Illuminate\Support\Facades\Mail;
+use App\Jobs\SendWorkoutEmail;
 
-class WorkoutController extends Controller
+class  WorkoutController extends Controller
 {
     // Alleen ingelogde gebruikers kunnen toegang krijgen tot deze controller-acties
     public function __construct()
@@ -59,7 +63,11 @@ class WorkoutController extends Controller
         $workout->reps = $request->input('reps');
         $workout->weight = $request->input('weight');
         $workout->description = $request->input('description');
-        $workout->user_id = Auth::id(); // Koppel de workout aan de ingelogde gebruiker
+        $workout->slug = Str::slug($request->input('exercise'));
+        $workout->user_id = Auth::id();
+
+        // Stel de gebruiker in als de eigenaar van de workout
+        $workout->user_id = Auth::id();
 
         // Sla de workout op
         $workout->save();
@@ -75,9 +83,9 @@ class WorkoutController extends Controller
     /**
      * Toon de form voor het bewerken van een workout.
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        $workout = Workout::findOrFail($id);
+        $workout = Workout::where('slug', $slug)->firstOrFail();
         $musclegroups = Musclegroup::all(); // Haal alle spiergroepen op
 
         // Controleer of de ingelogde gebruiker de eigenaar van de workout is
@@ -91,8 +99,10 @@ class WorkoutController extends Controller
     /**
      * Update een bestaande workout.
      */
-    public function update(Request $request, Workout $workout)
+    public function update(Request $request, $slug)
     {
+        $workout = Workout::where('slug', $slug)->firstOrFail();
+
         // Zorg ervoor dat alleen de eigenaar de workout kan updaten
         if ($workout->user_id !== Auth::id()) {
             return redirect()->route('workouts.index')->with('error', 'Je mag deze workout niet bewerken.');
@@ -108,7 +118,10 @@ class WorkoutController extends Controller
             'description' => 'nullable|string',
         ]);
 
+        // Update de workout
         $workout->update($validatedData);
+        $workout->slug = Str::slug($request->input('exercise'));
+        $workout->save();
 
         // Update de gekoppelde spiergroepen
         $workout->musclegroups()->sync($request->musclegroups);
@@ -119,8 +132,10 @@ class WorkoutController extends Controller
     /**
      * Verwijder een workout.
      */
-    public function destroy(Workout $workout)
+    public function destroy($slug)
     {
+        $workout = Workout::where('slug', $slug)->firstOrFail();
+
         // Zorg ervoor dat alleen de eigenaar de workout kan verwijderen
         if ($workout->user_id !== Auth::id()) {
             return redirect()->route('workouts.index')->with('error', 'Je mag deze workout niet verwijderen.');
@@ -135,8 +150,21 @@ class WorkoutController extends Controller
     /**
      * Toon een enkele workout.
      */
-    public function show(Workout $workout)
+    public function show($slug)
     {
+        $workout = Workout::where('slug', $slug)->firstOrFail();
         return view('workouts.show', compact('workout'));
+    }
+
+    public function sendEmail($slug)
+    {
+        $workout = Workout::where('slug', $slug)->firstOrFail();
+        $userEmail = auth()->user()->queue;
+
+        // Verzend de job naar de queue
+        SendWorkoutEmail::dispatch($workout, $userEmail);
+
+        // Keer terug naar de index met een succesbericht
+        return redirect()->route('workouts.index')->with('success', 'De email wordt verwerkt en zal binnenkort worden verzonden!');
     }
 }
